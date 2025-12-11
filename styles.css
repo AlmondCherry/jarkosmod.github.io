@@ -367,7 +367,6 @@ body {
     height: 40px;
     object-fit: contain;
     image-rendering: pixelated;
-    filter: hue-rotate(300deg) brightness(0.9) contrast(1.1);
 }
 
 .logo-text {
@@ -512,11 +511,6 @@ body {
     height: 60px;
     object-fit: contain;
     image-rendering: pixelated;
-    filter: 
-        hue-rotate(300deg) 
-        brightness(0.9) 
-        contrast(1.1)
-        drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
     opacity: 0.8;
     z-index: 1;
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -1598,3 +1592,4 @@ body {
     transform: translateY(0);
 
 }
+
