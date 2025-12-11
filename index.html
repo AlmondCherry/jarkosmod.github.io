@@ -1,407 +1,477 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой первый сайт</title>
-    <style>
-        /* Общие стили */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Шапка сайта */
-        header {
-            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
-            color: white;
-            padding: 1.5rem 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            margin-right: 10px;
-            font-size: 2rem;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 1.5rem;
-        }
-        
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        
-        nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        /* Основное содержимое */
-        main {
-            padding: 3rem 0;
-        }
-        
-        .hero {
-            text-align: center;
-            padding: 3rem 1rem;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 3rem;
-        }
-        
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #182848;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 1.5rem;
-            color: #555;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: linear-gradient(to right, #4b6cb7, #182848);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Секции */
-        section {
-            margin-bottom: 3rem;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #182848;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(to right, #4b6cb7, #182848);
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-        
-        /* Карточки */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .card-img {
-            height: 200px;
-            background-color: #4b6cb7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-        }
-        
-        .card-content {
-            padding: 1.5rem;
-        }
-        
-        .card h3 {
-            margin-bottom: 0.8rem;
-            color: #182848;
-        }
-        
-        /* Футер */
-        footer {
-            background-color: #182848;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .social-links {
-            display: flex;
-            margin: 1.5rem 0;
-        }
-        
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            margin: 0 10px;
-            color: white;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        
-        .social-links a:hover {
-            background-color: #4b6cb7;
-        }
-        
-        .copyright {
-            margin-top: 1.5rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-        }
-        
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                margin-top: 1rem;
-                justify-content: center;
-            }
-            
-            nav ul li {
-                margin: 0 0.5rem;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .cards {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <title>JARKOS - Crimson Mod for Terraria</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
 </head>
 <body>
-    <!-- Шапка сайта -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <span class="logo-icon">🚀</span>
-                <span>МойСайт</span>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#home">Главная</a></li>
-                    <li><a href="#about">О нас</a></li>
-                    <li><a href="#services">Услуги</a></li>
-                    <li><a href="#contact">Контакты</a></li>
+    <!-- Canvas for blood rain -->
+    <canvas id="blood-rain"></canvas>
+
+    <!-- Background layers for parallax -->
+    <div class="parallax-bg">
+        <div class="parallax-layer layer-1" data-speed="0.1"></div>
+        <div class="parallax-layer layer-2" data-speed="0.3"></div>
+        <div class="parallax-layer layer-3" data-speed="0.5"></div>
+        <div class="parallax-layer blood-stains" data-speed="0.2"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <nav class="main-nav">
+                <a href="#" class="logo">
+                    <img src="assets/images/jarkos-logo.png" alt="Jarkos Mod Logo" class="logo-img">
+                    <span class="logo-text">JARKOS</span>
+                </a>
+                
+                <div class="header-controls">
+                    <button id="language-toggle" class="language-toggle pixel-border" title="Switch language">
+                        <span class="language-text">RU</span>
+                        <span class="language-icon">🌐</span>
+                    </button>
+                    
+                    <button class="menu-toggle" aria-label="Open menu">
+                        <span class="menu-bar"></span>
+                        <span class="menu-bar"></span>
+                        <span class="menu-bar"></span>
+                    </button>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li><a href="#features" class="nav-link" data-i18n="nav.features">Content</a></li>
+                    <li><a href="#gallery" class="nav-link" data-i18n="nav.gallery">Crimson Saga</a></li>
+                    <li><a href="#installation" class="nav-link" data-i18n="nav.installation">Installation</a></li>
+                    <li><a href="#changelog" class="nav-link" data-i18n="nav.changelog">Updates</a></li>
+                    <li><a href="#team" class="nav-link" data-i18n="nav.team">Team</a></li>
+                    <li><a href="#community" class="nav-link" data-i18n="nav.community">Community</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-    
-    <!-- Основное содержимое -->
-    <main class="container">
-        <!-- Герой-секция -->
-        <section id="home" class="hero">
-            <h1>Добро пожаловать на мой сайт!</h1>
-            <p>Это пример современного HTML-сайта с адаптивным дизайном, созданный с использованием чистого HTML и CSS. Сайт полностью функционален и готов к использованию.</p>
-            <a href="#about" class="btn">Узнать больше</a>
-        </section>
-        
-        <!-- О нас -->
-        <section id="about">
-            <h2 class="section-title">О нас</h2>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-img">💡</div>
-                    <div class="card-content">
-                        <h3>Наша миссия</h3>
-                        <p>Мы стремимся создавать красивые и функциональные веб-сайты, которые помогают нашим клиентам достигать своих целей в цифровом мире.</p>
+
+    <!-- Banner with logo -->
+    <section class="jarkos-banner">
+        <div class="container">
+            <div class="floating-icons-container">
+                <!-- Icons are added via JavaScript -->
+            </div>
+            <div class="banner-center">
+                <h1 class="banner-title pixel-text">JARKOS</h1>
+                <p class="banner-subtitle" data-i18n="banner.subtitle">Crimson Mod for Terraria</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main section -->
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2 class="hero-title pixel-text" data-i18n="hero.title">ADVENTURE AWAITS</h2>
+                    <p class="hero-subtitle" data-i18n="hero.subtitle">Enter the world of Crimson Saga</p>
+                    <p class="hero-description" data-i18n="hero.description">Discover new bosses, biomes, items and exciting mechanics in this massive Terraria expansion</p>
+                    
+                    <div class="hero-buttons">
+                        <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3354939602" class="btn btn-blood pixel-border" target="_blank">
+                            <span class="btn-text" data-i18n="buttons.workshop">Steam Workshop</span>
+                            <span class="btn-icon">🩸</span>
+                        </a>
+                        <a href="#gallery" class="btn btn-secondary pixel-border">
+                            <span class="btn-text" data-i18n="buttons.explore">Explore World</span>
+                            <span class="btn-icon">🔍</span>
+                        </a>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-img">🎯</div>
-                    <div class="card-content">
-                        <h3>Наши цели</h3>
-                        <p>Разрабатывать инновационные решения, которые делают веб-разработку доступной для всех, независимо от уровня технических навыков.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-img">🚀</div>
-                    <div class="card-content">
-                        <h3>Наше видение</h3>
-                        <p>Стать лидерами в создании современных веб-решений, которые вдохновляют и меняют цифровой ландшафт к лучшему.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">300+</span>
+                            <span class="stat-label" data-i18n="stats.items">Items</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">2</span>
+                            <span class="stat-label" data-i18n="stats.bosses">New Bosses</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">1</span>
+                            <span class="stat-label" data-i18n="stats.class">New Class</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <!-- Услуги -->
-        <section id="services">
-            <h2 class="section-title">Наши услуги</h2>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-img" style="background-color: #2ecc71;">🌐</div>
-                    <div class="card-content">
-                        <h3>Веб-разработка</h3>
-                        <p>Создание современных, адаптивных веб-сайтов и веб-приложений с использованием передовых технологий.</p>
+
+        <!-- What the mod adds -->
+        <section id="features" class="section features">
+            <div class="container">
+                <h2 class="section-title pixel-text" data-i18n="sections.features">What does the mod add?</h2>
+                
+                <div class="mod-content-grid">
+                    <div class="content-item pixel-border">
+                        <div class="content-icon">📦</div>
+                        <div class="content-text">
+                            <h3 data-i18n="content.1.title">300+ items</h3>
+                            <p data-i18n="content.1.description">The mod contains over 300 items in total</p>
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-img" style="background-color: #e74c3c;">📱</div>
-                    <div class="card-content">
-                        <h3>Адаптивный дизайн</h3>
-                        <p>Разработка дизайна, который идеально отображается на всех устройствах: от компьютеров до смартфонов.</p>
+                    
+                    <div class="content-item pixel-border">
+                        <div class="content-icon">👹</div>
+                        <div class="content-text">
+                            <h3 data-i18n="content.2.title">2 new bosses</h3>
+                            <p data-i18n="content.2.description">Unique bosses with interesting mechanics</p>
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-img" style="background-color: #f39c12;">⚡</div>
-                    <div class="card-content">
-                        <h3>Оптимизация</h3>
-                        <p>Ускорение работы сайтов, улучшение SEO и оптимизация для лучшего пользовательского опыта.</p>
+                    
+                    <div class="content-item pixel-border">
+                        <div class="content-icon">⚔️</div>
+                        <div class="content-text">
+                            <h3 data-i18n="content.3.title">100+ weapons</h3>
+                            <p data-i18n="content.3.description">Over 100 different weapons for all playstyles</p>
+                        </div>
+                    </div>
+                    
+                    <div class="content-item pixel-border">
+                        <div class="content-icon">💎</div>
+                        <div class="content-text">
+                            <h3 data-i18n="content.4.title">50+ accessories</h3>
+                            <p data-i18n="content.4.description">Over 50 accessories with unique effects</p>
+                        </div>
+                    </div>
+                    
+                    <div class="content-item pixel-border">
+                        <div class="content-icon">🤖</div>
+                        <div class="content-text">
+                            <h3 data-i18n="content.5.title">New class</h3>
+                            <p data-i18n="content.5.description">New fifth playable class "Mechanoids"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="content-item pixel-border">
+                        <div class="content-icon">⚙️</div>
+                        <div class="content-text">
+                            <h3 data-i18n="content.6.title">New mechanics</h3>
+                            <p data-i18n="content.6.description">Many new mechanics and systems for gameplay variety</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <!-- Контакты -->
-        <section id="contact">
-            <h2 class="section-title">Свяжитесь с нами</h2>
-            <div class="hero" style="padding: 2rem;">
-                <p>Мы всегда рады новым проектам и сотрудничеству. Свяжитесь с нами, чтобы обсудить ваши идеи!</p>
-                <a href="mailto:info@example.com" class="btn">Написать нам</a>
+
+        <!-- Gallery -->
+        <section id="gallery" class="section gallery">
+            <div class="container">
+                <h2 class="section-title pixel-text" data-i18n="sections.gallery">Crimson Saga</h2>
+                
+                <div class="featured-content-grid">
+                    <!-- Biome: Crimson Eden -->
+                    <div class="featured-item pixel-border" data-category="biome">
+                        <div class="featured-image-wrapper">
+                            <img src="assets/screenshots/crimson_eden.jpg" alt="Crimson Eden" class="featured-image" loading="lazy">
+                            <span class="content-badge" data-i18n="badges.biome">New Biome</span>
+                        </div>
+                        <div class="featured-content">
+                            <h3 data-i18n="gallery.1.title">Crimson Eden</h3>
+                            <p data-i18n="gallery.1.p1">Once upon a time, a civilization believing in decency and one God flourished in these crimson sands. The crosses in this biome contained the accumulated blood of innocent and brutally executed inhabitants.</p>
+                            <p data-i18n="gallery.1.p2">Thus, Crimson Eden turned into an almost dead desert, where only some architectures of past generations remained, and crimson crosses, which were, surprisingly, extremely durable. The entire desert was soaked in anger and injustice.</p>
+                            <p data-i18n="gallery.1.p3">All these accumulated feelings, held for a long time in the soil, gave the opportunity for one of the most ancient Gods of vengeance to be born. Alas, soon after this, many left this place. Now this is clearly not Eden, but only a desert soaked in negative thoughts and condemnations.</p>
+                        </div>
+                    </div>
+
+                    <!-- Boss 1: Tenderot -->
+                    <div class="featured-item pixel-border" data-category="boss">
+                        <div class="featured-image-wrapper">
+                            <img src="assets/screenshots/tenderot_boss.jpg" alt="Tenderot" class="featured-image" loading="lazy">
+                            <span class="content-badge" data-i18n="badges.boss">Boss</span>
+                        </div>
+                        <div class="featured-content">
+                            <h3 data-i18n="gallery.2.title">Tenderot</h3>
+                            <p data-i18n="gallery.2.p1">Tenderot is the most current God of vengeance after the death of Charon. Visually, it is a huge creature, remotely resembling a worm, with scales made of the strongest material - nitozium.</p>
+                            <p data-i18n="gallery.2.p2">This God contradicts his divine brethren with his principles. He sees revenge in everything, and his obsession has long become like "blindfold" - he sees no progress in anyone or anything. His perception of the world is distorted by the eternal thirst for retribution, which makes him both powerful and blind to the true nature of things.</p>
+                        </div>
+                    </div>
+
+                    <!-- Boss 2: Death Goddess -->
+                    <div class="featured-item pixel-border boss-death" data-category="boss">
+                        <div class="featured-image-wrapper">
+                            <img src="assets/screenshots/death_goddess_boss.jpg" alt="Death Goddess" class="featured-image" loading="lazy">
+                            <span class="content-badge" data-i18n="badges.boss">Boss</span>
+                        </div>
+                        <div class="featured-content">
+                            <h3 data-i18n="gallery.3.title">Death Goddess</h3>
+                            <p data-i18n="gallery.3.p1">An ancient deity personifying not the end, but the transition. Unlike Tenderot, whose essence is permeated with personal resentment and thirst for revenge, the Death Goddess represents an impersonal, inexorable force of natural order.</p>
+                            <p data-i18n="gallery.3.p2">She does not feel hatred, does not strive for destruction for the sake of destruction. Her existence is a guarantee that everything that has a beginning will have an end. In her presence, time flows differently, and matter reminds of its mortality.</p>
+                            <p data-i18n="gallery.3.p3">Her appearance in Crimson Eden was a response to the violation of the natural balance caused by the birth of Tenderot from accumulated injustice. She is the necessary opposite, a force striving to restore disturbed harmony, even if it requires putting an end to an entire era.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation guide -->
+        <section id="installation" class="section installation">
+            <div class="container">
+                <h2 class="section-title pixel-text" data-i18n="sections.installation">Installation</h2>
+                
+                <div class="installation-steps">
+                    <div class="step-card pixel-border" data-step="1">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title" data-i18n="steps.1.title">Install tModLoader</h3>
+                        <p class="step-description" data-i18n="steps.1.description">Download tModLoader via Steam or from the official website</p>
+                        <button class="step-action pixel-border" onclick="window.open('https://github.com/tModLoader/tModLoader', '_blank')" data-i18n="buttons.download">Download</button>
+                    </div>
+                    
+                    <div class="step-card pixel-border" data-step="2">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title" data-i18n="steps.2.title">Subscribe to Jarkos</h3>
+                        <p class="step-description" data-i18n="steps.2.description">Go to Steam Workshop and subscribe to Jarkos mod</p>
+                        <button class="step-action pixel-border" onclick="window.open('https://steamcommunity.com/sharedfiles/filedetails/?id=3354939602', '_blank')" data-i18n="buttons.workshop">Steam Workshop</button>
+                    </div>
+                    
+                    <div class="step-card pixel-border" data-step="3">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title" data-i18n="steps.3.title">Activate the mod</h3>
+                        <p class="step-description" data-i18n="steps.3.description">Launch tModLoader and enable Jarkos in the mods menu</p>
+                        <button class="step-action pixel-border" onclick="alert('In the mods menu, activate Jarkos, then create a new world or load an existing one')" data-i18n="buttons.instructions">Instructions</button>
+                    </div>
+                    
+                    <div class="step-card pixel-border" data-step="4">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title" data-i18n="steps.4.title">Start the game</h3>
+                        <p class="step-description" data-i18n="steps.4.description">Create a new world and start your adventure</p>
+                        <button class="step-action pixel-border" onclick="alert('Create a new world and explore the new content of the mod')" data-i18n="buttons.start">Start Game</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Update history -->
+        <section id="changelog" class="section changelog">
+            <div class="container">
+                <h2 class="section-title pixel-text" data-i18n="sections.changelog">Updates</h2>
+                
+                <div class="changelog-container">
+                    <div class="changelog-item pixel-border">
+                        <div class="changelog-header">
+                            <h3 class="version">Version 1.2.2</h3>
+                            <span class="date">March 2025</span>
+                        </div>
+                        <div class="changelog-content">
+                            <h4 data-i18n="changelog.new">New features:</h4>
+                            <ul>
+                                <li><strong data-i18n="changelog.weapons">Weapons:</strong> Nuclon disembowelment, Mage Slayer, Silent Destroyer, Wand of Rupture, Staff of Static Shard, AR-6, PSI-16, SHT-01, High-Speed Revenge God Rifle, Immortal Kingdom, Hoppemaker, Devil's Wings, Multi-Wave Emitter, Swamp Plague, Ancient Zweihander</li>
+                                <li><strong data-i18n="changelog.accessories">Accessories:</strong> Heart of Serenity, Heavenly Flame, Vengeful Eye, Solar Shard, Oceanic Tide Fragment, Steel Chains, Shiny Lens, Blood Star Amulet, Distorted Crimson Stones, Sealed Shadow Pendant, Scarlet Impulse, Exhaustion Crystal, Warped Cloud, Evil God Parchment, Nature God Sign, Shining Generator, Creepy Night Seal, Disterian Ring, Disterian Eye, Disterian Aviators, Bygone Times, Taranis Seal</li>
+                                <li><strong data-i18n="changelog.other">Other:</strong> Nasty Cocktail, Dark Cherry Smash, Canned Food, Magic Spirit Extract, Magic Spirit Essence, Strength Extract, Strength Essence, Madness Potion, Sleeping Tincture</li>
+                                <li><strong data-i18n="changelog.generation">Generation:</strong> "Underground Cradle" between jungle and ocean biomes</li>
+                            </ul>
+                            <h4 data-i18n="changelog.changes">Changes:</h4>
+                            <ul>
+                                <li data-i18n="changelog.change1">Many item recipes have been changed</li>
+                                <li data-i18n="changelog.change2">Disterian Ring heals 33% 5% of maximum health every 0.833 30 seconds</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="changelog-item pixel-border">
+                        <div class="changelog-header">
+                            <h3 class="version">Version 1.2</h3>
+                            <span class="date">March 20, 2025</span>
+                        </div>
+                        <div class="changelog-content">
+                            <h4 data-i18n="changelog.new">New features:</h4>
+                            <ul>
+                                <li><strong data-i18n="changelog.accessories">Accessories:</strong> Anxiety, Beginner Fisherman's Necklace, Fisherman's Necklace, Advanced Fisherman's Necklace, Burning Mark, Uranium Component, Energy Fuse, Energy Conservator, Mechanoid Emblem, Modern Optimization Mechanism, Universal Energy Block, Raven Wings</li>
+                                <li><strong data-i18n="changelog.materials">Materials:</strong> Crystal Clear Alloy</li>
+                                <li><strong data-i18n="changelog.melee">Melee Weapons:</strong> Sacrificial Knives, Piercer, Demon Sword, Revenge God Rifle, Retribution, Alien World Glove</li>
+                                <li><strong data-i18n="changelog.ranged">Ranged Weapons:</strong> Unearthly Rifle, Agony</li>
+                                <li><strong data-i18n="changelog.magic">Magic Weapons:</strong> Leaf Fall, Adapting Bow, Ice Rain Staff, Rainbow Wand</li>
+                                <li><strong data-i18n="changelog.summoner">Summoner Weapons:</strong> Astra, Nova, Magellanic, Energy Knives, Plasma Projector, Reflector, Concentrator, Crystal Prism, Azure Prism, Torpedo Launcher, Quadruple Cannon</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Development Team -->
+        <section id="team" class="section team">
+            <div class="container">
+                <h2 class="section-title pixel-text" data-i18n="sections.team">Development Team</h2>
+                <p class="team-subtitle" data-i18n="team.subtitle">Creators of the Crimson Saga</p>
+                
+                <div class="team-grid">
+                    <!-- Main developer (largest) -->
+                    <div class="team-card team-lead pixel-border" id="main-developer">
+                        <div class="team-avatar-wrapper">
+                            <img src="assets/icons/cherryrossle.png" alt="Cherryrossle" class="team-avatar">
+                            <div class="lead-badge" data-i18n="team.lead.badge">LEAD DEVELOPER</div>
+                            <div class="particles-container" id="main-dev-particles"></div>
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Cherryrossle (Almond)</h3>
+                            <p class="team-role" data-i18n="team.lead.role">Lead mod developer, architect of Crimson Saga</p>
+                            <p class="team-desc" data-i18n="team.lead.description">Creator of JARKOS world, main programmer and designer</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Other developers -->
+                    <div class="team-card pixel-border">
+                        <div class="team-avatar-wrapper">
+                            <img src="assets/icons/shmel.png" alt="Шмель" class="team-avatar">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Шмель</h3>
+                            <p class="team-role" data-i18n="team.shmel.role">Video editing, promotion, website creation</p>
+                            <p class="team-desc" data-i18n="team.shmel.description">Responsible for visual presentation and project marketing</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card pixel-border">
+                        <div class="team-avatar-wrapper">
+                            <img src="assets/icons/kermitus.png" alt="Кермитус" class="team-avatar">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Кермитус</h3>
+                            <p class="team-role" data-i18n="team.kermitus.role">Drawing most armor sets</p>
+                            <p class="team-desc" data-i18n="team.kermitus.description">Artist creating unique visual styles for equipment</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card pixel-border">
+                        <div class="team-avatar-wrapper">
+                            <img src="assets/icons/autism.png" alt="Аутизм" class="team-avatar">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Аутизм</h3>
+                            <p class="team-role" data-i18n="team.autism.role">Drawing sprites</p>
+                            <p class="team-desc" data-i18n="team.autism.description">Creator of detailed sprites for items and creatures</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card pixel-border">
+                        <div class="team-avatar-wrapper">
+                            <img src="assets/icons/winda.png" alt="Винда" class="team-avatar">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Винда</h3>
+                            <p class="team-role" data-i18n="team.winda.role">Drawing sprites and translation assistance</p>
+                            <p class="team-desc" data-i18n="team.winda.description">Artist and linguist responsible for localization</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card pixel-border">
+                        <div class="team-avatar-wrapper">
+                            <img src="assets/icons/banana.png" alt="Банан" class="team-avatar">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Банан</h3>
+                            <p class="team-role" data-i18n="team.banana.role">Drawing sprites, code assistance and many ideas</p>
+                            <p class="team-desc" data-i18n="team.banana.description">Multidisciplinary contributor involved in all aspects of development</p>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card pixel-border">
+                        <div class="team-avatar-wrapper">
+                            <img src="assets/icons/kknat.png" alt="kknat" class="team-avatar">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">kknat (ккнат)</h3>
+                            <p class="team-role" data-i18n="team.kknat.role">Motivation and inspiration</p>
+                            <p class="team-desc" data-i18n="team.kknat.description">Motivator who inspired the team and kept everyone going</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community -->
+        <section id="community" class="section community">
+            <div class="container">
+                <h2 class="section-title pixel-text" data-i18n="sections.community">Community</h2>
+                
+                <div class="community-links">
+                    <a href="https://discord.gg/GpTmgtj2nc" class="community-link discord pixel-border" target="_blank">
+                        <div class="link-icon">💬</div>
+                        <div class="link-content">
+                            <h3>Discord</h3>
+                            <p data-i18n="community.discord">Discussion, help, theories</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/@JarkosOfficial" class="community-link youtube pixel-border" target="_blank">
+                        <div class="link-icon">📺</div>
+                        <div class="link-content">
+                            <h3>YouTube</h3>
+                            <p data-i18n="community.youtube">Guides, playthroughs, lore</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://github.com" class="community-link github pixel-border" target="_blank">
+                        <div class="link-icon">💻</div>
+                        <div class="link-content">
+                            <h3>GitHub</h3>
+                            <p data-i18n="community.github">Source code, suggestions</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="download-section">
+                    <div class="download-card pixel-border">
+                        <h3 data-i18n="download.title">Start Your Journey</h3>
+                        <p data-i18n="download.version">Current version: <strong>Version 1.2.2</strong></p>
+                        <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3354939602" class="btn btn-blood pixel-border" target="_blank">
+                            <span data-i18n="buttons.workshop">Steam Workshop</span>
+                        </a>
+                        <p class="download-note" data-i18n="download.note">Requires tModLoader</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
-    
-    <!-- Футер -->
-    <footer>
-        <div class="container footer-content">
-            <div class="logo" style="color: white; margin-bottom: 1rem;">
-                <span class="logo-icon">🚀</span>
-                <span>МойСайт</span>
-            </div>
-            <p>Создано с использованием HTML и CSS</p>
-            <div class="social-links">
-                <a href="#">FB</a>
-                <a href="#">TW</a>
-                <a href="#">IG</a>
-                <a href="#">IN</a>
-            </div>
-            <div class="copyright">
-                &copy; 2023 МойСайт. Все права защищены.
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/images/jarkos-logo.png" alt="Jarkos Mod Logo" class="logo-img">
+                    <span class="logo-text">JARKOS</span>
+                    <p data-i18n="footer.mod">Mod for Terraria</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 data-i18n="footer.navigation">Navigation</h4>
+                    <ul>
+                        <li><a href="#features" data-i18n="nav.features">Content</a></li>
+                        <li><a href="#gallery" data-i18n="nav.gallery">Crimson Saga</a></li>
+                        <li><a href="#installation" data-i18n="nav.installation">Installation</a></li>
+                        <li><a href="#changelog" data-i18n="nav.changelog">Updates</a></li>
+                        <li><a href="#team" data-i18n="nav.team">Team</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 data-i18n="footer.resources">Resources</h4>
+                    <ul>
+                        <li><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3354939602" target="_blank">Steam Workshop</a></li>
+                        <li><a href="https://discord.gg/GpTmgtj2nc" target="_blank">Discord</a></li>
+                        <li><a href="https://www.youtube.com/@JarkosOfficial" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-credits">
+                    <h4 data-i18n="footer.authors">Authorship</h4>
+                    <p data-i18n="footer.description">Jarkos Mod created for Terraria enthusiasts.</p>
+                    <p data-i18n="footer.copyright">Terraria © Re-Logic. All rights reserved.</p>
+                    <p class="copyright">© 2025 Jarkos Mod Team.</p>
+                </div>
             </div>
         </div>
     </footer>
-    
-    <script>
-        // Плавная прокрутка для ссылок в навигации
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Динамическое изменение года в футере
-        document.addEventListener('DOMContentLoaded', function() {
-            const year = new Date().getFullYear();
-            const copyrightElement = document.querySelector('.copyright');
-            copyrightElement.textContent = copyrightElement.textContent.replace('2023', year);
-        });
-        
-        // Добавление эффекта при наведении на карточки
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transition = 'transform 0.3s, box-shadow 0.3s';
-            });
-        });
-    </script>
+
+    <script src="script.js"></script>
 </body>
 </html>
