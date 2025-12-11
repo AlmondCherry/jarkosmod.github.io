@@ -8,8 +8,19 @@
     <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
 </head>
 <body>
-    <!-- Canvas for blood rain -->
-    <canvas id="blood-rain"></canvas>
+    <!-- Анимация смывания крови при загрузке -->
+    <div id="blood-wash-overlay" class="blood-wash-overlay">
+        <div class="blood-drip-container">
+            <!-- Капли крови будут генерироваться через JS -->
+        </div>
+        <div class="blood-wash-text">
+            <span class="blood-text">JARKOS</span>
+            <span class="wash-text">THE CRIMSON SAGA</span>
+        </div>
+    </div>
+
+    <!-- Canvas для плавающих сфер -->
+    <canvas id="floating-spheres"></canvas>
 
     <!-- Background layers for parallax -->
     <div class="parallax-bg">
@@ -78,11 +89,11 @@
                     <div class="hero-buttons">
                         <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3354939602" class="btn btn-blood pixel-border" target="_blank">
                             <span class="btn-text" data-i18n="buttons.workshop">Steam Workshop</span>
-                            <span class="btn-icon"></span>
+                            <span class="btn-icon">🩸</span>
                         </a>
                         <a href="#gallery" class="btn btn-secondary pixel-border">
                             <span class="btn-text" data-i18n="buttons.explore">Explore World</span>
-                            <span class="btn-icon"></span>
+                            <span class="btn-icon">🔍</span>
                         </a>
                     </div>
                     
@@ -104,14 +115,14 @@
             </div>
         </section>
 
-        <!-- What the mod adds -->
+        <!-- Что добавляет мод -->
         <section id="features" class="section features">
             <div class="container">
                 <h2 class="section-title pixel-text" data-i18n="sections.features">What does the mod add?</h2>
                 
                 <div class="mod-content-grid">
                     <div class="content-item pixel-border">
-                        <div class="content-icon"></div>
+                        <div class="content-icon">📦</div>
                         <div class="content-text">
                             <h3 data-i18n="content.1.title">300+ items</h3>
                             <p data-i18n="content.1.description">The mod contains over 300 items in total</p>
@@ -119,7 +130,7 @@
                     </div>
                     
                     <div class="content-item pixel-border">
-                        <div class="content-icon"></div>
+                        <div class="content-icon">👹</div>
                         <div class="content-text">
                             <h3 data-i18n="content.2.title">2 new bosses</h3>
                             <p data-i18n="content.2.description">Unique bosses with interesting mechanics</p>
@@ -127,7 +138,7 @@
                     </div>
                     
                     <div class="content-item pixel-border">
-                        <div class="content-icon"></div>
+                        <div class="content-icon">⚔️</div>
                         <div class="content-text">
                             <h3 data-i18n="content.3.title">100+ weapons</h3>
                             <p data-i18n="content.3.description">Over 100 different weapons for all playstyles</p>
@@ -135,7 +146,7 @@
                     </div>
                     
                     <div class="content-item pixel-border">
-                        <div class="content-icon"></div>
+                        <div class="content-icon">💎</div>
                         <div class="content-text">
                             <h3 data-i18n="content.4.title">50+ accessories</h3>
                             <p data-i18n="content.4.description">Over 50 accessories with unique effects</p>
@@ -143,7 +154,7 @@
                     </div>
                     
                     <div class="content-item pixel-border">
-                        <div class="content-icon"></div>
+                        <div class="content-icon">🤖</div>
                         <div class="content-text">
                             <h3 data-i18n="content.5.title">New class</h3>
                             <p data-i18n="content.5.description">New fifth playable class "Mechanoids"</p>
@@ -151,7 +162,7 @@
                     </div>
                     
                     <div class="content-item pixel-border">
-                        <div class="content-icon"></div>
+                        <div class="content-icon">⚙️</div>
                         <div class="content-text">
                             <h3 data-i18n="content.6.title">New mechanics</h3>
                             <p data-i18n="content.6.description">Many new mechanics and systems for gameplay variety</p>
@@ -161,13 +172,13 @@
             </div>
         </section>
 
-        <!-- Gallery -->
+        <!-- Галерея -->
         <section id="gallery" class="section gallery">
             <div class="container">
                 <h2 class="section-title pixel-text" data-i18n="sections.gallery">Crimson Saga</h2>
                 
                 <div class="featured-content-grid">
-                    <!-- Biome: Crimson Eden -->
+                    <!-- Биом: Багровый Эдем -->
                     <div class="featured-item pixel-border" data-category="biome">
                         <div class="featured-image-wrapper">
                             <img src="assets/screenshots/crimson_eden.jpg" alt="Crimson Eden" class="featured-image" loading="lazy">
@@ -181,7 +192,7 @@
                         </div>
                     </div>
 
-                    <!-- Boss 1: Tenderot -->
+                    <!-- Босс 1: Тендерот -->
                     <div class="featured-item pixel-border" data-category="boss">
                         <div class="featured-image-wrapper">
                             <img src="assets/screenshots/tenderot_boss.jpg" alt="Tenderot" class="featured-image" loading="lazy">
@@ -194,7 +205,7 @@
                         </div>
                     </div>
 
-                    <!-- Boss 2: Death Goddess -->
+                    <!-- Босс 2: Богиня Смерти -->
                     <div class="featured-item pixel-border boss-death" data-category="boss">
                         <div class="featured-image-wrapper">
                             <img src="assets/screenshots/death_goddess_boss.jpg" alt="Death Goddess" class="featured-image" loading="lazy">
@@ -211,7 +222,7 @@
             </div>
         </section>
 
-        <!-- Installation guide -->
+        <!-- Инструкция по установке -->
         <section id="installation" class="section installation">
             <div class="container">
                 <h2 class="section-title pixel-text" data-i18n="sections.installation">Installation</h2>
@@ -248,7 +259,7 @@
             </div>
         </section>
 
-        <!-- Update history -->
+        <!-- История обновлений -->
         <section id="changelog" class="section changelog">
             <div class="container">
                 <h2 class="section-title pixel-text" data-i18n="sections.changelog">Updates</h2>
@@ -296,14 +307,14 @@
             </div>
         </section>
 
-        <!-- Development Team -->
+        <!-- Команда разработчиков -->
         <section id="team" class="section team">
             <div class="container">
                 <h2 class="section-title pixel-text" data-i18n="sections.team">Development Team</h2>
                 <p class="team-subtitle" data-i18n="team.subtitle">Creators of the Crimson Saga</p>
                 
                 <div class="team-grid">
-                    <!-- Main developer (largest) -->
+                    <!-- Главный разработчик (самый большой) -->
                     <div class="team-card team-lead pixel-border" id="main-developer">
                         <div class="team-avatar-wrapper">
                             <img src="assets/icons/cherryrossle.png" alt="Cherryrossle" class="team-avatar">
@@ -317,13 +328,13 @@
                         </div>
                     </div>
                     
-                    <!-- Other developers -->
+                    <!-- Остальные разработчики -->
                     <div class="team-card pixel-border">
                         <div class="team-avatar-wrapper">
                             <img src="assets/icons/shmel.png" alt="Шмель" class="team-avatar">
                         </div>
                         <div class="team-info">
-                            <h3 class="team-name">Smelecov</h3>
+                            <h3 class="team-name">Шмель</h3>
                             <p class="team-role" data-i18n="team.shmel.role">Video editing, promotion, website creation</p>
                             <p class="team-desc" data-i18n="team.shmel.description">Responsible for visual presentation and project marketing</p>
                         </div>
@@ -334,7 +345,7 @@
                             <img src="assets/icons/kermitus.png" alt="Кермитус" class="team-avatar">
                         </div>
                         <div class="team-info">
-                            <h3 class="team-name">Kermitus</h3>
+                            <h3 class="team-name">Кермитус</h3>
                             <p class="team-role" data-i18n="team.kermitus.role">Drawing most armor sets</p>
                             <p class="team-desc" data-i18n="team.kermitus.description">Artist creating unique visual styles for equipment</p>
                         </div>
@@ -345,7 +356,7 @@
                             <img src="assets/icons/autism.png" alt="Аутизм" class="team-avatar">
                         </div>
                         <div class="team-info">
-                            <h3 class="team-name">Aut1sm</h3>
+                            <h3 class="team-name">Аутизм</h3>
                             <p class="team-role" data-i18n="team.autism.role">Drawing sprites</p>
                             <p class="team-desc" data-i18n="team.autism.description">Creator of detailed sprites for items and creatures</p>
                         </div>
@@ -356,7 +367,7 @@
                             <img src="assets/icons/winda.png" alt="Винда" class="team-avatar">
                         </div>
                         <div class="team-info">
-                            <h3 class="team-name">Mythicalwinda</h3>
+                            <h3 class="team-name">Винда</h3>
                             <p class="team-role" data-i18n="team.winda.role">Drawing sprites and translation assistance</p>
                             <p class="team-desc" data-i18n="team.winda.description">Artist and linguist responsible for localization</p>
                         </div>
@@ -367,7 +378,7 @@
                             <img src="assets/icons/banana.png" alt="Банан" class="team-avatar">
                         </div>
                         <div class="team-info">
-                            <h3 class="team-name">Banan09</h3>
+                            <h3 class="team-name">Банан</h3>
                             <p class="team-role" data-i18n="team.banana.role">Drawing sprites, code assistance and many ideas</p>
                             <p class="team-desc" data-i18n="team.banana.description">Multidisciplinary contributor involved in all aspects of development</p>
                         </div>
@@ -378,7 +389,7 @@
                             <img src="assets/icons/kknat.png" alt="kknat" class="team-avatar">
                         </div>
                         <div class="team-info">
-                            <h3 class="team-name">kknat</h3>
+                            <h3 class="team-name">kknat (ккнат)</h3>
                             <p class="team-role" data-i18n="team.kknat.role">Motivation and inspiration</p>
                             <p class="team-desc" data-i18n="team.kknat.description">Motivator who inspired the team and kept everyone going</p>
                         </div>
@@ -387,7 +398,7 @@
             </div>
         </section>
 
-        <!-- Community -->
+        <!-- Сообщество -->
         <section id="community" class="section community">
             <div class="container">
                 <h2 class="section-title pixel-text" data-i18n="sections.community">Community</h2>
@@ -432,7 +443,7 @@
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Подвал -->
     <footer class="main-footer">
         <div class="container">
             <div class="footer-content">

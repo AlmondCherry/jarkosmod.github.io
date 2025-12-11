@@ -6,10 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
     initGallery();
     initScrollAnimations();
     initInstallationGuide();
-    initBloodRain();
+    initFloatingSpheres(); // Плавающие сферы вместо дождя
     initLogoBanner();
     initLanguageToggle();
     initMainDeveloperParticles();
+    initBloodWashAnimation(); // Анимация смывания крови
     
     // Show main content after loading
     setTimeout(() => {
@@ -17,6 +18,391 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.opacity = '1';
     }, 100);
 });
+
+// ==================== ПЛАВАЮЩИЕ СФЕРЫ ====================
+function initFloatingSpheres() {
+    const canvas = document.getElementById('floating-spheres');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas dimensions
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Класс для сфер
+    class FloatingSphere {
+        constructor() {
+            this.reset();
+        }
+        
+        reset() {
+            // Случайные начальные параметры
+            this.radius = Math.random() * 40 + 10; // 10-50px
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            
+            // Скорость движения
+            this.speedX = (Math.random() - 0.5) * 0.5;
+            this.speedY = (Math.random() - 0.5) * 0.5;
+            
+            // Прозрачность
+            this.opacity = Math.random() * 0.3 + 0.1; // 0.1-0.4
+            
+            // Цветовые вариации красного
+            const redBase = 139; // Базовый красный цвет (#8b0000)
+            const redVariation = Math.floor(Math.random() * 50);
+            this.color = `rgba(${redBase + redVariation}, 0, 0, ${this.opacity})`;
+            
+            // Пульсация
+            this.pulseSpeed = Math.random() * 0.02 + 0.005;
+            this.pulsePhase = Math.random() * Math.PI * 2;
+            this.baseRadius = this.radius;
+            
+            // Движение по синусоиде
+            this.waveAmplitude = Math.random() * 2 + 1;
+            this.waveFrequency = Math.random() * 0.02 + 0.01;
+            this.wavePhase = Math.random() * Math.PI * 2;
+            
+            // Время жизни
+            this.life = 1;
+            this.maxLife = 10000 + Math.random() * 20000;
+            this.age = 0;
+        }
+        
+        update(deltaTime) {
+            this.age += deltaTime;
+            
+            // Постепенное исчезновение и перерождение
+            this.life = 1 - (this.age / this.maxLife);
+            
+            if (this.life <= 0) {
+                this.reset();
+                this.life = 1;
+                this.age = 0;
+                return;
+            }
+            
+            // Движение
+            this.x += this.speedX;
+            this.y += this.speedY;
+            
+            // Волнообразное движение
+            this.x += Math.sin(this.age * this.waveFrequency + this.wavePhase) * this.waveAmplitude * 0.1;
+            this.y += Math.cos(this.age * this.waveFrequency * 0.7 + this.wavePhase) * this.waveAmplitude * 0.1;
+            
+            // Пульсация радиуса
+            this.radius = this.baseRadius * (1 + Math.sin(this.age * this.pulseSpeed + this.pulsePhase) * 0.3);
+            
+            // Отражение от границ
+            if (this.x < -this.radius) {
+                this.x = canvas.width + this.radius;
+            } else if (this.x > canvas.width + this.radius) {
+                this.x = -this.radius;
+            }
+            
+            if (this.y < -this.radius) {
+                this.y = canvas.height + this.radius;
+            } else if (this.y > canvas.height + this.radius) {
+                this.y = -this.radius;
+            }
+            
+            // Медленное изменение направления
+            this.speedX += (Math.random() - 0.5) * 0.002;
+            this.speedY += (Math.random() - 0.5) * 0.002;
+            
+            // Ограничение скорости
+            const maxSpeed = 0.8;
+            const speed = Math.sqrt(this.speedX * this.speedX + this.speedY * this.speedY);
+            if (speed > maxSpeed) {
+                this.speedX = (this.speedX / speed) * maxSpeed;
+                this.speedY = (this.speedY / speed) * maxSpeed;
+            }
+        }
+        
+        draw() {
+            ctx.save();
+            
+            // Градиент для эффекта свечения
+            const gradient = ctx.createRadialGradient(
+                this.x, this.y, 0,
+                this.x, this.y, this.radius * 1.5
+            );
+            
+            gradient.addColorStop(0, `rgba(255, 50, 50, ${this.opacity * this.life * 0.8})`);
+            gradient.addColorStop(0.5, `rgba(139, 0, 0, ${this.opacity * this.life * 0.5})`);
+            gradient.addColorStop(1, `rgba(74, 0, 0, ${this.opacity * this.life * 0.1})`);
+            
+            // Основная сфера
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // Внутреннее свечение
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius * 0.7, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 100, 100, ${this.opacity * this.life * 0.3})`;
+            ctx.fill();
+            
+            // Блики
+            ctx.beginPath();
+            ctx.arc(
+                this.x - this.radius * 0.3,
+                this.y - this.radius * 0.3,
+                this.radius * 0.2,
+                0, Math.PI * 2
+            );
+            ctx.fillStyle = `rgba(255, 200, 200, ${this.opacity * this.life * 0.4})`;
+            ctx.fill();
+            
+            // Внешнее свечение
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius * 1.8, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(139, 0, 0, ${this.opacity * this.life * 0.05})`;
+            ctx.fill();
+            
+            ctx.restore();
+        }
+    }
+    
+    // Инициализация сфер
+    const spheres = [];
+    const sphereCount = Math.min(15, Math.floor((canvas.width * canvas.height) / 80000));
+    
+    for (let i = 0; i < sphereCount; i++) {
+        spheres.push(new FloatingSphere());
+        // Разнообразим начальные позиции
+        spheres[i].age = Math.random() * spheres[i].maxLife;
+    }
+    
+    let lastTime = 0;
+    let mouseX = canvas.width / 2;
+    let mouseY = canvas.height / 2;
+    let mouseRadius = 150;
+    
+    // Следим за мышью
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    
+    // Анимация
+    function animate(currentTime) {
+        const deltaTime = (currentTime - lastTime) / 16 || 1;
+        lastTime = currentTime;
+        
+        // Очищаем с прозрачностью для эффекта шлейфа
+        ctx.fillStyle = 'rgba(15, 0, 0, 0.03)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Обновляем и рисуем сферы
+        spheres.forEach(sphere => {
+            // Взаимодействие с мышью (отталкивание)
+            const dx = sphere.x - mouseX;
+            const dy = sphere.y - mouseY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < mouseRadius) {
+                const force = (mouseRadius - distance) / mouseRadius;
+                const angle = Math.atan2(dy, dx);
+                
+                sphere.x += Math.cos(angle) * force * 5;
+                sphere.y += Math.sin(angle) * force * 5;
+                
+                // Увеличиваем пульсацию при приближении к мыши
+                sphere.pulseSpeed = 0.05;
+            } else {
+                sphere.pulseSpeed = 0.005 + Math.random() * 0.02;
+            }
+            
+            sphere.update(deltaTime);
+            sphere.draw();
+        });
+        
+        requestAnimationFrame(animate);
+    }
+    
+    // Запуск анимации
+    requestAnimationFrame(animate);
+    
+    // Изменение количества сфер при изменении размера окна
+    window.addEventListener('resize', () => {
+        // Добавляем новые сферы, если увеличилось окно
+        const newSphereCount = Math.min(15, Math.floor((canvas.width * canvas.height) / 80000));
+        
+        while (spheres.length < newSphereCount) {
+            const sphere = new FloatingSphere();
+            spheres.push(sphere);
+        }
+        
+        // Удаляем лишние сферы, если уменьшилось окно
+        while (spheres.length > newSphereCount) {
+            spheres.pop();
+        }
+    });
+}
+
+// ==================== АНИМАЦИЯ СМЫВАНИЯ КРОВИ ====================
+function initBloodWashAnimation() {
+    const overlay = document.getElementById('blood-wash-overlay');
+    if (!overlay) return;
+    
+    const dripContainer = overlay.querySelector('.blood-drip-container');
+    
+    // Создаём капли крови
+    function createBloodDrips() {
+        const dripCount = 30;
+        const splashCount = 10;
+        
+        // Создаём капли
+        for (let i = 0; i < dripCount; i++) {
+            setTimeout(() => {
+                const drip = document.createElement('div');
+                drip.className = 'blood-drip';
+                
+                // Случайные параметры
+                const left = Math.random() * 100;
+                const height = 100 + Math.random() * 200;
+                const delay = Math.random() * 0.5;
+                const duration = 0.5 + Math.random() * 1;
+                const width = 1 + Math.random() * 3;
+                
+                // Устанавливаем стили
+                drip.style.left = `${left}%`;
+                drip.style.height = `${height}px`;
+                drip.style.width = `${width}px`;
+                drip.style.animationDelay = `${delay}s`;
+                drip.style.animationDuration = `${duration}s`;
+                drip.style.opacity = '0.7';
+                
+                // Анимация падения
+                drip.style.animation = `dripFall ${duration}s cubic-bezier(0.55, 0, 1, 0.45) ${delay}s forwards`;
+                
+                // Добавляем в контейнер
+                dripContainer.appendChild(drip);
+                
+                // Создаём брызг при "падении"
+                setTimeout(() => {
+                    createBloodSplash(left, overlay.offsetHeight - 50);
+                }, delay * 1000 + duration * 1000);
+                
+            }, i * 100);
+        }
+        
+        // Создаём случайные брызги
+        for (let i = 0; i < splashCount; i++) {
+            setTimeout(() => {
+                const splash = document.createElement('div');
+                splash.className = 'blood-splash';
+                
+                const left = Math.random() * 100;
+                const top = 20 + Math.random() * 80;
+                const size = 20 + Math.random() * 40;
+                
+                splash.style.left = `${left}%`;
+                splash.style.top = `${top}%`;
+                splash.style.width = `${size}px`;
+                splash.style.height = `${size * 0.5}px`;
+                splash.style.opacity = '0.4';
+                splash.style.animation = `splashFade 1s ease-out ${Math.random() * 0.5}s forwards`;
+                
+                dripContainer.appendChild(splash);
+            }, i * 200);
+        }
+    }
+    
+    // Создаём брызг крови
+    function createBloodSplash(xPercent, yPos) {
+        const splashCount = 5 + Math.floor(Math.random() * 5);
+        
+        for (let i = 0; i < splashCount; i++) {
+            setTimeout(() => {
+                const splash = document.createElement('div');
+                splash.className = 'blood-splash';
+                
+                const x = (xPercent / 100) * window.innerWidth;
+                const offsetX = (Math.random() - 0.5) * 100;
+                const offsetY = Math.random() * -30;
+                const size = 10 + Math.random() * 30;
+                
+                splash.style.left = `${x + offsetX}px`;
+                splash.style.top = `${yPos + offsetY}px`;
+                splash.style.width = `${size}px`;
+                splash.style.height = `${size * 0.4}px`;
+                splash.style.opacity = '0.6';
+                splash.style.animation = `splashFade 0.8s ease-out forwards`;
+                
+                dripContainer.appendChild(splash);
+                
+                // Удаляем через время
+                setTimeout(() => {
+                    if (splash.parentNode) {
+                        splash.parentNode.removeChild(splash);
+                    }
+                }, 800);
+            }, i * 50);
+        }
+    }
+    
+    // Добавляем CSS анимации
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes dripFall {
+            0% {
+                transform: translateY(-100px) scaleY(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(${window.innerHeight}px) scaleY(1);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes splashFade {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Запускаем анимацию
+    createBloodDrips();
+    
+    // Удаляем overlay через 3 секунды
+    setTimeout(() => {
+        overlay.style.animation = 'bloodWashAway 1s ease-out forwards';
+        setTimeout(() => {
+            if (overlay.parentNode) {
+                overlay.parentNode.removeChild(overlay);
+            }
+            if (style.parentNode) {
+                style.parentNode.removeChild(style);
+            }
+        }, 1000);
+    }, 3000);
+}
 
 // ==================== MOBILE MENU ====================
 function initMobileMenu() {
@@ -68,95 +454,6 @@ function initParallax() {
             const speed = parseFloat(layer.getAttribute('data-speed')) || 0.5;
             const yPos = -(scrolled * speed);
             layer.style.transform = `translate3d(0, ${yPos}px, 0)`;
-        });
-    });
-}
-
-// ==================== BLOOD RAIN ====================
-function initBloodRain() {
-    const canvas = document.getElementById('blood-rain');
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    
-    // Set canvas dimensions
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    // Rain particles
-    const particles = [];
-    const particleCount = Math.min(150, Math.floor(window.innerWidth / 5));
-    
-    // Create particles
-    function createParticles() {
-        particles.length = 0;
-        for (let i = 0; i < particleCount; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                length: Math.random() * 30 + 10,
-                speed: Math.random() * 5 + 2,
-                width: Math.random() * 2 + 0.5,
-                opacity: Math.random() * 0.4 + 0.1,
-                color: `rgba(${139 + Math.floor(Math.random() * 50)}, 0, 0, `
-            });
-        }
-    }
-    
-    // Draw rain
-    function drawRain() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        particles.forEach(particle => {
-            // Update position
-            particle.y += particle.speed;
-            
-            // Reset particle if it goes beyond bottom border
-            if (particle.y > canvas.height) {
-                particle.y = -particle.length;
-                particle.x = Math.random() * canvas.width;
-            }
-            
-            // Draw droplet
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(particle.x, particle.y + particle.length);
-            ctx.lineWidth = particle.width;
-            ctx.strokeStyle = particle.color + particle.opacity + ')';
-            ctx.stroke();
-            
-            // Add small "tail" or blur
-            ctx.beginPath();
-            ctx.arc(particle.x, particle.y + particle.length, particle.width * 1.5, 0, Math.PI * 2);
-            ctx.fillStyle = particle.color + (particle.opacity * 0.7) + ')';
-            ctx.fill();
-        });
-        
-        requestAnimationFrame(drawRain);
-    }
-    
-    createParticles();
-    drawRain();
-    
-    // Change rain intensity on scroll
-    let lastScrollY = window.scrollY;
-    let rainIntensity = 0.7;
-    
-    window.addEventListener('scroll', () => {
-        const scrollDelta = Math.abs(window.scrollY - lastScrollY);
-        lastScrollY = window.scrollY;
-        
-        // Increase intensity on fast scroll
-        rainIntensity = Math.min(1, 0.7 + scrollDelta * 0.001);
-        
-        // Apply intensity to particles
-        particles.forEach(particle => {
-            particle.speed = (Math.random() * 5 + 2) * rainIntensity;
         });
     });
 }

@@ -72,8 +72,148 @@ body {
     padding: 0 var(--container-padding);
 }
 
-/* Canvas для кровавого дождя */
-#blood-rain {
+/* ====== АНИМАЦИЯ СМЫВАНИЯ КРОВИ ПРИ ЗАГРУЗКЕ ====== */
+.blood-wash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(139, 0, 0, 0.95),
+        rgba(74, 0, 0, 0.9),
+        rgba(42, 0, 0, 0.85)
+    );
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    animation: bloodWashAway 3s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+    pointer-events: none;
+}
+
+@keyframes bloodWashAway {
+    0% {
+        opacity: 1;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    70% {
+        opacity: 1;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    100% {
+        opacity: 0;
+        clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+        visibility: hidden;
+    }
+}
+
+.blood-drip-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.blood-drip {
+    position: absolute;
+    top: -100px;
+    width: 3px;
+    background: linear-gradient(to bottom, 
+        rgba(255, 0, 0, 0.8) 0%,
+        rgba(139, 0, 0, 0.9) 70%,
+        rgba(74, 0, 0, 1) 100%);
+    border-radius: 0 0 10px 10px;
+    filter: blur(1px);
+    transform-origin: top;
+}
+
+.blood-splash {
+    position: absolute;
+    width: 40px;
+    height: 20px;
+    background: radial-gradient(ellipse at center,
+        rgba(255, 0, 0, 0.6) 0%,
+        rgba(139, 0, 0, 0.4) 50%,
+        transparent 70%);
+    border-radius: 50%;
+    filter: blur(3px);
+}
+
+.blood-wash-text {
+    position: relative;
+    text-align: center;
+    z-index: 10000;
+}
+
+.blood-text {
+    display: block;
+    font-family: 'Courier New', monospace;
+    font-size: 5rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 
+        0 0 30px rgba(255, 0, 0, 0.8),
+        0 0 60px rgba(139, 0, 0, 0.6),
+        3px 3px 0 rgba(0, 0, 0, 0.5);
+    letter-spacing: 8px;
+    margin-bottom: 1rem;
+    animation: bloodTextPulse 2s ease-in-out infinite;
+}
+
+.wash-text {
+    display: block;
+    font-family: 'Courier New', monospace;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    animation: washTextSlide 3s ease-in-out;
+}
+
+@keyframes bloodTextPulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 30px rgba(255, 0, 0, 0.8),
+            0 0 60px rgba(139, 0, 0, 0.6),
+            3px 3px 0 rgba(0, 0, 0, 0.5);
+        transform: scale(1);
+    }
+    50% {
+        text-shadow: 
+            0 0 50px rgba(255, 0, 0, 1),
+            0 0 100px rgba(139, 0, 0, 0.8),
+            0 0 150px rgba(74, 0, 0, 0.6),
+            5px 5px 0 rgba(0, 0, 0, 0.5);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes washTextSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    70% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Canvas для плавающих сфер */
+#floating-spheres {
     position: fixed;
     top: 0;
     left: 0;
@@ -81,7 +221,7 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: -2;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 /* Параллакс фон */
@@ -373,7 +513,7 @@ body {
     object-fit: contain;
     image-rendering: pixelated;
     filter: 
-        hue-rotate(0deg) 
+        hue-rotate(300deg) 
         brightness(0.9) 
         contrast(1.1)
         drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
@@ -384,6 +524,11 @@ body {
 
 .floating-icon:hover {
     opacity: 1;
+    filter: 
+        hue-rotate(300deg) 
+        brightness(1.2) 
+        contrast(1.2)
+        drop-shadow(4px 4px 8px rgba(139, 0, 0, 0.5));
     transform: scale(1.2);
     z-index: 2;
     pointer-events: auto;
@@ -1197,6 +1342,11 @@ body {
         width: 50px;
         height: 50px;
     }
+    
+    .blood-text {
+        font-size: 4rem;
+        letter-spacing: 6px;
+    }
 }
 
 @media (max-width: 900px) {
@@ -1218,6 +1368,16 @@ body {
     .jarkos-banner {
         padding: 40px 0;
         min-height: 250px;
+    }
+    
+    .blood-text {
+        font-size: 3rem;
+        letter-spacing: 4px;
+    }
+    
+    .wash-text {
+        font-size: 1.2rem;
+        letter-spacing: 3px;
     }
 }
 
@@ -1310,6 +1470,16 @@ body {
         font-size: 3.5rem;
         letter-spacing: 5px;
     }
+    
+    .blood-text {
+        font-size: 2.5rem;
+        letter-spacing: 3px;
+    }
+    
+    .wash-text {
+        font-size: 1rem;
+        letter-spacing: 2px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -1340,6 +1510,11 @@ body {
     
     .hero-title {
         font-size: 2.5rem;
+    }
+    
+    .blood-text {
+        font-size: 2rem;
+        letter-spacing: 2px;
     }
 }
 
@@ -1376,6 +1551,16 @@ body {
         width: 100px;
         height: 100px;
     }
+    
+    .blood-text {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+    
+    .wash-text {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
 }
 
 @media (max-width: 400px) {
@@ -1395,6 +1580,14 @@ body {
     .hero-title {
         font-size: 2rem;
     }
+    
+    .blood-text {
+        font-size: 1.5rem;
+    }
+    
+    .wash-text {
+        font-size: 0.8rem;
+    }
 }
 
 /* Анимации при скролле */
@@ -1407,6 +1600,4 @@ body {
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
-
 }
-
