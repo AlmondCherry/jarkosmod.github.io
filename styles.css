@@ -384,11 +384,6 @@ body {
 
 .floating-icon:hover {
     opacity: 1;
-    filter: 
-        hue-rotate(300deg) 
-        brightness(1.2) 
-        contrast(1.2)
-        drop-shadow(4px 4px 8px rgba(139, 0, 0, 0.5));
     transform: scale(1.2);
     z-index: 2;
     pointer-events: auto;
@@ -1414,3 +1409,4 @@ body {
     transform: translateY(0);
 
 }
+
