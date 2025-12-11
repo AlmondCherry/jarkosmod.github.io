@@ -373,7 +373,7 @@ body {
     object-fit: contain;
     image-rendering: pixelated;
     filter: 
-        hue-rotate(300deg) 
+        hue-rotate(0deg) 
         brightness(0.9) 
         contrast(1.1)
         drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
@@ -1412,4 +1412,5 @@ body {
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
+
 }
