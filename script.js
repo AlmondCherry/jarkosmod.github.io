@@ -97,7 +97,7 @@ function initFloatingSpheres() {
             this.y += Math.cos(this.age * this.waveFrequency * 0.7 + this.wavePhase) * this.waveAmplitude * 0.1;
             
             // Пульсация радиуса
-            this.radius = this.baseRadius * (1 + Math.sin(this.age * this.pulseSpeed + this.pulsePhase) * 0.3);
+            this.radius = this.baseRadius * (1 + Math.sin(this.age * this.pulseSpeed + this.pulsePhase) * 1.9);
             
             // Отражение от границ
             if (this.x < -this.radius) {
@@ -1364,3 +1364,4 @@ window.addEventListener('load', function() {
     initScrollAnimations();
 
 });
+
