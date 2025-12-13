@@ -184,7 +184,7 @@ function initFloatingSpheres() {
     let lastTime = 0;
     let mouseX = canvas.width / 2;
     let mouseY = canvas.height / 2;
-    let mouseRadius = 150;
+    let mouseRadius = 550;
     
     // Следим за мышью
     document.addEventListener('mousemove', (e) => {
@@ -1362,4 +1362,5 @@ document.addEventListener('keydown', function(e) {
 window.addEventListener('load', function() {
     // Start animations after loading
     initScrollAnimations();
+
 });
